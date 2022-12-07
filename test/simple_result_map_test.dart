@@ -17,30 +17,6 @@ void main() {
   group('with initialized examples', () {
     final exampleObject = Example(username: 'bob');
 
-    test('should map to a new typed result', () {
-      final exampleResult = Result<Example, Failure>.success(exampleObject);
-      final stringResult =
-          exampleResult.mapSuccess((example) => 'Hello ${example!.username}');
-      expect(stringResult, isA<Result<String, Failure>>());
-
-      final result =
-          stringResult.when(success: (name) => name, failure: (_) => null);
-      expect(result, 'Hello bob');
-
-      final boolResult = exampleResult.mapSuccess((example) => true);
-      expect(boolResult, isA<Result<bool, Failure>>());
-
-      final errorResult = Result<Example, Failure>.failure(ExampleFailure());
-      expect(errorResult, isA<Result<Example, Failure>>());
-      final errorStringResult =
-          errorResult.mapSuccess((value) => 'Error should be null');
-      expect(errorStringResult, isA<Result<String, Failure?>>());
-      final errorMessage = errorStringResult.when(
-        success: (value) => 'Shoult not be!',
-        failure: (_) => 'ERROR Message',
-      );
-      expect(errorMessage, 'ERROR Message');
-    });
     group('with a success result', () {
       final exampleResult = Result<Example, Failure>.success(exampleObject);
 
